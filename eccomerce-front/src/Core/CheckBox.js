@@ -1,0 +1,32 @@
+import React, { useState } from "react";
+
+const CheckBox = ({ categories ,handleFilters}) => {
+
+    const [checked, setChecked] = useState([]);
+
+    const handleToggle = c => () => {
+        //return the first index or -1
+        const currentCategoryId = checked.indexOf(c)
+        const newCurrentCategoryId = [...checked]
+        //if currently checked was not already in checked stat >push
+        //else pull/take off
+        if (currentCategoryId === -1) {
+            newCurrentCategoryId.push(c)
+        } else {
+            newCurrentCategoryId.splice(currentCategoryId, 1)
+        }
+        // console.log(newCurrentCategoryId);
+        setChecked(newCurrentCategoryId);
+        handleFilters(newCurrentCategoryId);
+    }
+
+    return categories.map((c, i) => (
+        <li key={i} className="list-unstyled">
+            <input onChange={handleToggle(c._id)} value={checked.indexOf(c._id === -1)} type="checkbox" className="form-check-input" />
+            <label className="form-check-label">{c.name}</label>
+
+        </li>
+    ));
+};
+
+export default CheckBox;
